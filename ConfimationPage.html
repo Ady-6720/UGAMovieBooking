@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
+    <title>Order Confirmation</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,300;1,900&family=Lilita+One&display=swap" rel="stylesheet">
-    <style>
-        
+    <style>   
         .navbar {
             background-color: #F4893D;
         }
@@ -30,96 +29,12 @@
             width: 25px; /* Adjust the width and height as needed */
             height: 25px;
         }
-
-        /* Custom style for the login button */
-        .custom-login-button {
-            background-color: #F4893D; /* Set button color to #F4893D */
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 350px;
-        }
-
-        .custom-login-button:hover {
-            background-color: #FFA653; /* Change button color on hover */
-        }
-
-        .orderbox {
-            display: grid;
-            width: 1000px;
-            height: 700px;
-            background-color: #F4893D;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 10px;
-            margin-top: 100px;
-            grid-template-columns: 1fr 1fr;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-            padding: 50px;
-        }
-
-        .orderdetails {
-            padding-top: 20px;
-            background-color: white;
-            height: 500px;
-            width: 400px;
-            margin-bottom: 300px;
-            border-radius: 10px;
-        }
-
-        .orderbox p {
-            font-size: 14pt;
-        }
-
-        .paymentmethodsgrid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            margin-left: 15px;
-        }
         
-        .paymentmethod {
-            width: 200px;
-            height: 110px;
-            background-color: white;
-            margin-top: 30px;
-            border-radius: 10px;
+        .confirmationtext {
+            font-size: 30px;
             text-align: center;
-        }
-
-        .paymentmethod p {
-            font-size: 14pt;
-            margin-top: 40px;
-        }
-
-        input[type=text] {
-            width: 420px;
-            box-sizing: border-box;
-            border-radius: 10px;
-        }
-
-        .rightbox {
-            display: grid;
-            grid-template-rows: 1fr 1fr 1fr;
-            justify-content: center;
-        }
-
-        .rightbox label {
-            padding: 20px;
-        }
-
-        .confirmcancelbuttons{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            margin-left: 50px;
-        }
-
-        a {
-            text-decoration: none;
-            color: black;
+            border:5px solid #F4893D;
+            margin-top: 15%;
         }
 
     </style>
@@ -175,43 +90,10 @@
         </div>
     </nav>
     <div class="orderbox">
-        <div class="orderdetails">
-            <p style="display:inline-block"><b>Order Details:</b></p>
-            <br>
-            <p>Tickets:</p>
-            <p>Example Movie (Adult) x 2 - $29.99 <img src="https://icons.veryicon.com/png/o/miscellaneous/jt2/box-minus-1.png" alt="minus button" width="25px"></p>
-            <br>
-            <p>Example Movie (Child) x 1 - $9.99 <img src="https://icons.veryicon.com/png/o/miscellaneous/jt2/box-minus-1.png" alt="minus button" width="25px"></p>
-            <br> 
-            <p>Subtotal - 39.98</p>
-            <br> 
-            <p>Tax - $3.20</p>
-            <br>
-            <p>Total - $43.18</p>
-        </div>
-        <div class="rightbox">
-            <div class="paymentmethodsgrid">
-                <div class="paymentmethod">
-                   <p>MasterCard *2147</p>
-                </div>
-                <div class="paymentmethod">
-                   <p>Visa *3239</p>
-                </div>
-                <div class="paymentmethod">
-                    <p>Amex *1907</p>
-                </div>
-                <div class="paymentmethod">
-                    <p>Add Payment Method</p>
-                </div>
-            </div>
-            <form>
-                <label for="promo" style="margin-top: 50px;">Promo Code</label>
-                <input type="text" id="promo" name="promo" placeholder="Enter your promo code here...">
-            </form>
-            <div class="confirmcancelbuttons">
-                <button style="background-color: white; width: 150px;height: 40px;border-radius: 5px;"><a href="Main.html">Cancel</a></button>
-                <button style="background-color: white; width: 150px;height: 40px;border-radius: 5px;"><a href="ConfimationPage.html">Confirm Order</a></button>
-            </div>
+        <div class="confirmationtext">
+            <p>Your order has been placed!</p>
+            <p>Order ID: 2147</p>
+            <p>An order confirmation has been sent to your email.</p>
         </div>
     </div>
 </body>
