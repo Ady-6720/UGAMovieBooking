@@ -122,6 +122,10 @@
             margin: 10px;
             padding: 15px;
         }
+        a {
+            text-decoration: none;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -164,7 +168,7 @@
 
     <div class="container">
         <h2>Add Movie</h2>
-        <form id="addMovieForm">
+        <form id="addMovieForm" action="movie.php" method="post">
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" required>
