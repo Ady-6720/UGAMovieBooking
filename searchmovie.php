@@ -216,7 +216,7 @@
             } else {
                 ?>
                     <div>
-                        <p>The movie searched could not be found.</p>
+                        <p style="text-align: center; font-size: 24px; margin-top: 50px;">The movie searched could not be found.</p>
                     </div>    
                 <?php
             }
