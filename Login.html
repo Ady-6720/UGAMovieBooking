@@ -103,16 +103,16 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Login</h5>
-                <form id="loginForm">
+                <form id="loginForm" action="login.php" method="get">
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" required>
+                        <label for="username" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" required>
+                        <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <button type="button" class="custom-login-button btn btn-primary btn-block" onclick="validateLogin()">Login</button>
+                    <button type="submit" class="custom-login-button btn btn-primary btn-block">Login</button>
                 </form>
                 <p class="mt-3">Don't have an account? <a href="SignUp.html" id="signupLink">Sign Up</a></p>
             </div>
@@ -129,7 +129,6 @@
                 alert('Both username and password are required.');
             } else {
                 // Perform login logic here (e.g., sending data to a server)
-                alert(Logged in as ${username});
             }
         }
 
