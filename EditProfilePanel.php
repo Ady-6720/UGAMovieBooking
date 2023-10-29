@@ -15,13 +15,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,300;1,900&family=Lilita+One&display=swap" rel="stylesheet">
     <style>
         .container {
-    max-width: 800px; /* Increase the max-width for a wider container */
+            display: flex;
+            max-width: 800px; /* Increase the max-width for a wider container */
     margin: 50px auto;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    align-items: center;
+    justify-content: center;
 }
 
 
@@ -126,7 +127,7 @@
         }
         a {
             text-decoration: none;
-            color: white;
+            color: black;
         }
     </style>
 </head>
@@ -155,106 +156,21 @@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal" style="color:white" href="#"></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style="text-decoration:none">
-                        <i class="fa fa-shopping-cart" style="color:white"></i>
-                    </a>
-                </li>
-                <?php
-                if (session_status() == PHP_SESSION_ACTIVE) {
-                ?>
-                    <p style="margin-left: 50px; margin-top: 7px; color:white"> Welcome <?= $_SESSION['email']?></p>
-                <?php
-                }
-                ?>
             </ul>
-            <form class="d-flex center" action="searchmovie.php" method="get">
-                <input class="form-control me-2" type="search" placeholder="Search by Title" aria-label="Search" name="search">
-                <button class="btn btn-outline-primary" type="submit"> <a class="nav-link" href="#" style="text-decoration:none">
-                <i class="fa fa-search" style="color:white"></i></a></button>
-            </form>
-            <?php
-            if (session_status() == PHP_SESSION_NONE) {
-            ?>
-            <div class="nav navbar-nav navbar-right">
-                <a href="Login.html" class="btn navbar-btn btn-light" style="text-decoration:none;">Login</a>
-            </div>
-            <?php
-            } else {
-                if ($_SESSION['email'] != 'admin@cinemaebooking.com') {
-                ?>
-                <div class="nav navbar-nav navbar-right">
-                    <a href="main.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
-                </div>
-                  <?php
-                } else {
-                  ?>
-                  <div class="nav navbar-nav navbar-right">
-                    <a href="AdminControlPanel.html" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
-                </div>
-                <?php
-                }
-                ?>
-                <div class="nav navbar-nav navbar-right">
-                    <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
-                </div>
-            <?php    
-            }
-            ?>
         </div>
+        <div class="nav navbar-nav navbar-right">
+                <a href="EditProfilePanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
+            </div>
+            <div class="nav navbar-nav navbar-right">
+                <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
+            </div>
     </div>
 </nav>
 
-<tbody>
-<?php
-    $search = $_GET['search'];
-
-    $host = "localhost";
-    $database = "movies";
-    $username = "root";
-    $password = "";
-
-    //Test Connection
-    $conn = mysqli_connect($host, $username, $password, $database);
-    if (mysqli_connect_errno()) {
-        die("Connection error: " . mysqli_connect_error());
-    } 
-
-    $sql = "SELECT * FROM `moviecreation` WHERE `title` LIKE '$search'";
-    $result = mysqli_query($conn, $sql);
-    $movie = mysqli_fetch_assoc($result);
-    if ($result) {
-            if(mysqli_num_rows($result) > 0) {
-                ?>
-                <tr>
-                    <iframe width="100%" height="720" src=<?= $movie['trailer']; ?> title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="movie-card-container" style="overflow-x: auto; white-space: nowrap;">
-                                <div class="movie-card d-inline-block" style="margin-left: 280px;">
-                                    <img src="<?php echo $movie['poster']; ?>" alt="Movie" class="movie-image">
-                                    <p style ="font-size: 10px;"><b><?= $movie['description']; ?></p>
-                                    <p style="font-size: 12px;">Rated: <b><?= $movie['rating']; ?></b></p>
-                                    <p style="font-size: 12px;">Released in: <b><?= $movie['year']; ?></b></p>
-                                    <p style="font-size: 12px;">Genre: <b><?= $movie['genre']; ?></b></p>
-                                    <a href="SeatBook.html" class="btn btn-primary">Get Tickets</a>
-                                    <a href="#" class="btn btn-secondary">Learn More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </tr>
-                <?php
-            } else {
-                ?>
-                    <div>
-                        <p style="text-align: center; font-size: 24px; margin-top: 50px;">The movie searched could not be found.</p>
-                    </div>    
-                <?php
-            }
-    }
-    ?>
-</tbody>        
-</body>
-</html>
+<div>
+    <p style="text-align: center; margin-top: 50px; font-size: 24px;">Update User Information</p>
+</div>
+<div class="container" style="justify-content: space-between; gap: 10px;">
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="EditName.php">Change Name</a></button>
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="EditPassword.php">Change Password</a></button>
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="EditPersonalInfoPanel.php">Change Personal Information</a></button>

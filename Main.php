@@ -147,7 +147,7 @@ i img
         </li>
         <li>
           <?php
-           if (session_status() == PHP_SESSION_ACTIVE) {
+           if (isset( $_SESSION['email'])) {
             ?>
               <p style="margin-left: 50px; margin-top: 7px; color:white"> Welcome <?= $_SESSION['email']?></p>
             <?php
@@ -168,13 +168,37 @@ i img
             </div>
         <?php
         } else {
+            if (isset( $_SESSION['email'])) {
+              if ($_SESSION['email'] != 'admin@cinemaebooking.com') {
             ?>
             <div class="nav navbar-nav navbar-right">
-                <a href="main.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
+                <a href="EditProfilePanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
             </div>
             <div class="nav navbar-nav navbar-right">
                 <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
             </div>
+              <?php
+            } else {
+              ?>
+              <div class="nav navbar-nav navbar-right">
+                <a href="AdminControlPanel.html" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+              </div>
+              <div class="nav navbar-nav navbar-right">
+                <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
+              </div>
+            <?php
+            }
+            } else {
+              ?>
+              <div class="nav navbar-nav navbar-right">
+                <a href="Login.html" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Login</a>
+              </div>
+              <div class="nav navbar-nav navbar-right">
+                <a href="SignUp.html" class="btn navbar-btn btn-light" style="text-decoration:none;">Sign Up</a>
+              </div>
+              <?php
+            }
+            ?>
         <?php    
         }
         ?>

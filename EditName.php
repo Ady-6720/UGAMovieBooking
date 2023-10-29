@@ -1,49 +1,22 @@
-<?php
-    //admin pass = Movieadmin1!
-    $email = $_GET['email'];
-    $userpassword = $_GET['password'];
-    
-    $host = "localhost";
-    $database = "movies";
-    $username = "root";
-    $password = "";
-    
-    // Test Connection
-    $conn = mysqli_connect($host, $username, $password, $database);
-    if (mysqli_connect_errno()) {
-        die("Connection error: " . mysqli_connect_error());
-    } 
-    
-    $sql = "SELECT password FROM user WHERE email=?";
-    $stmt = mysqli_stmt_init($conn);
-    
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        die(mysqli_error($conn));
-    }
-    
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-    
-    $result = mysqli_stmt_get_result($stmt);
-    $row = mysqli_fetch_assoc($result);
-    
-    if ($row) {
-        $hashed_password = $row['password'];
+<?php session_start(); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Name</title>
+
+    <!-- Add Bootstrap CSS and JS CDN links -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <style>
         
-        if (password_verify($userpassword, $hashed_password)) {
-            session_start();
-            $_SESSION['email'] = $email;
-            header("Location: Main.php");
-        } else {
-            ?>
-               <title>Login Page</title>
-    <!-- Include Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,300;1,900&family=Lilita+One&display=swap" rel="stylesheet">
-    <style>
         .navbar {
+            position: sticky;
+            top: 0;
             background-color: #F4893D;
+            z-index: 1000;
         }
+
         .navbar-brand {
             font-family: 'fantasy';
         }
@@ -77,13 +50,104 @@
         .custom-login-button:hover {
             background-color: #FFA653; /* Change button color on hover */
         }
+
+        .orderbox {
+            display: grid;
+            width: 1000px;
+            height: 700px;
+            background-color: #F4893D;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 10px;
+            margin-top: 100px;
+            grid-template-columns: 1fr 1fr;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+        }
+
+        .orderdetails {
+            padding-top: 20px;
+            background-color: white;
+            height: 500px;
+            width: 400px;
+            margin-bottom: 300px;
+            border-radius: 10px;
+        }
+
+        .orderbox p {
+            font-size: 14pt;
+        }
+
+        .paymentmethodsgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-left: 15px;
+        }
+        
+        .paymentmethod {
+            width: 200px;
+            height: 110px;
+            background-color: white;
+            margin-top: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .paymentmethod p {
+            font-size: 14pt;
+            margin-top: 40px;
+        }
+
+        input[type=text] {
+            width: 420px;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+
+        .rightbox {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            justify-content: center;
+        }
+
+        .rightbox label {
+            padding: 20px;
+        }
+
+        .confirmcancelbuttons{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-left: 50px;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #005cbf;
+        }
+
+
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg ">
+  <nav class="navbar navbar-expand-lg ">
         <div class="container-fluid">
-            <a class="navbar-brand active" style="color:white; font-family: 'Lato', sans-serif; font-family: 'Lilita One', cursive;" href="Main.html">
+            <a class="navbar-brand active" style="color:white; font-family: 'Lato', sans-serif; font-family: 'Lilita One', cursive;" href="Main.php">
                 <i><img src="https://i.ibb.co/jy62Srz/36a17f9402f64b66ba11ad785ec9ff3e.png"></i> UGAMovieFinder
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,30 +193,30 @@
                 </ul>
             </div>
         </div>
-    </nav>
-
-    <!-- Login Card -->
-    <div class="container login-container">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Login</h5>
-                <form id="loginForm" action="login.php" method="get">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="custom-login-button btn btn-primary btn-block">Login</button>
-                </form>
-                <p>Invalid credentials.</p>
-                <p class="mt-3">Don't have an account? <a href="SignUp.html" id="signupLink">Sign Up</a></p>
+        <div class="nav navbar-nav navbar-right">
+                <a href="EditProfilePanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
+            </div>
+            <div class="nav navbar-nav navbar-right">
+                <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
             </div>
         </div>
+    </nav>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1>Edit Name</h1>
+            <form action="UpdateName.php" method="post">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstname" placeholder="Your first name..." required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastname" placeholder="Your last name..." required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Name</button>
+            </form>
+        </div>
     </div>
-    <?php
-        }
-    }
-?>
+</div>

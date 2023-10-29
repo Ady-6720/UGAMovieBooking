@@ -74,27 +74,43 @@
             <h5 class="card-title">Sign Up</h5>
             <form id="signupForm" action="createaccount.php" method="post">
                 <div class="mb-3">
-                    <label for="firstName" class="form-label">First Name</label>
+                    <label for="firstName" class="form-label">First Name<sup> *required</sup></label>
                     <input type="text" class="form-control" id="firstname" name="firstname" required>
                 </div>
                 <div class="mb-3">
-                    <label for="lastName" class="form-label">Last Name</label>
+                    <label for="lastName" class="form-label">Last Name<sup> *required</sup></label>
                     <input type="text" class="form-control" id="lastname" name="lastname" required>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email Address</label>
+                    <label for="email" class="form-label">Email Address<sup> *required</sup></label>
                     <input type="email" class="form-control" id="email" name="email" required>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <label for="password" class="form-label">Password<sup> *required</sup></label>
+                    <input type="password" class="form-control" id="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
                     <small class="form-text text-muted">Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.</small>
                 </div>
                 <div class="mb-3">
-                    <label type="checkbox" style="font-size: 13pt;">Subscribe for Promotions</label>    
-                    <input type="checkbox">
+                    <label for="password" class="form-label">Confirm Password<sup> *required</sup></label>
+                    <input type="password" class="form-control" id="confirm" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
                 </div>
-                <button type="submit" class="custom-signup-button btn btn-primary btn-block" onclick=validateSignUp()>Sign Up</button>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address <sup> *optional</sup></label>
+                    <input type="text" class="form-control" id="address" name="address">
+                    <small class="form-text text-muted">Example: 123 Movie St.</small>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Payment Card <sup> *optional</sup></label>
+                    <input type="text" class="form-control" id="paymentcard" name="paymentcard">
+                </div>
+                <div class="mb-3">
+                    <label for="promostatus" class="form-label">Sign Up for Promotions?</label>
+                    <select class="form-select" id="promostatus" name="promostatus">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <button type="submit" class="custom-signup-button btn btn-primary btn-block" onclick=validatePassword()>Sign Up</button>
             </form>
             <p class="mt-3">Already have an account? <a href="Login.html">Log In</a></p>
         </div>
@@ -104,21 +120,16 @@
 
     <script>
         // JavaScript code for password validation
-        function validateSignup() {
-            const email = document.getElementById('password').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('retypePassword').value;
-            
-            // Regular expression to check password format
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-            if (username === '' || password === '') {
-                alert('Both username and password are required.');
-            } else if (!password.match(passwordRegex)) {
-                alert('Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.');
+        function validatePassword() {
+            let password = document.getElementById("password");
+            let confirmpassword = document.getElementById("confirm");
+            if (password.value != confirmpassword.value) {
+                confirmpassword.setCustomValidity("The passwords do not match.");
             } else {
-                alert(`Signed up as ${username}`);
+                confirmpassword.setCustomValidity("");
             }
+            password.onchange = validatePassword;
+            confirmpassword.onkeyup = validatePassword;
         }
     </script>
 
