@@ -24,8 +24,12 @@ if (!mysqli_stmt_prepare($stmt, $sql)) {
 }
 
 mysqli_stmt_execute($stmt);
-
-header("Location: EditAddress.php");
+$subject = 'Address updated';
+$message = 'Your address has been updated: ';
+$message .= $address;
+$header = 'From: ugacinemaebooking@gmail.com';
+mail($email, $subject, $message, $header);
+header("Location: EditProfilePanel.php");
 
 ?>
 

@@ -172,5 +172,5 @@
 </div>
 <div class="container" style="justify-content: space-between; gap: 10px;">
     <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="EditAddress.php">Change Address</a></button>
-    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="">Change Payment Cards</a></button>
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="EditPaymentCards.php">Change Payment Cards</a></button>
     <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="EditPromotionStatus.php">Change Promotion Status</a></button>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Address</title>
+    <title>Activate Account</title>
 
     <!-- Add Bootstrap CSS and JS CDN links -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -205,33 +205,13 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h1>Edit Address</h1>
-            <form action="UpdateAddress.php" method="post">
+            <h1>Activate Account</h1>
+            <form action="ProcessCode.php" method="post">
                 <div class="mb-3">
-                    <label for="Address" class="form-label">Address</label>
-                    <?php
-                    $email = $_SESSION['email'];
-
-                    $host = "localhost";
-                    $database = "movies";
-                    $username = "root";
-                    $password = "";
-                
-                    //Test Connection
-                    $conn = mysqli_connect($host, $username, $password, $database);
-                    if (mysqli_connect_errno()) {
-                        die("Connection error: " . mysqli_connect_error());
-                    } 
-
-                    $sql = "SELECT address FROM user WHERE email = '$email'";
-                    $result = mysqli_query($conn, $sql);
-                    $row = mysqli_fetch_array($result);
-                    $address = $row['address'];
-                    ?>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Your address..." required value='<?php echo $address; ?>'>
-                    <small class="form-text text-muted">Example: 123 Movie St.</small>
+                    <label for="verificationcode" class="form-label">Verification Code</label>
+                    <input type="text" class="form-control" id="verificationcode" name="verificationcode" placeholder="Your verification code..." required>
                 </div>
-                <button type="submit" class="btn btn-primary">Update Address</button>
+                <button type="submit" class="btn btn-primary">Activate Account</button>
             </form>
         </div>
     </div>

@@ -209,11 +209,34 @@
             <form action="UpdateName.php" method="post">
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstname" placeholder="Your first name..." required>
+                    <?php
+                    $email = $_SESSION['email'];
+
+                    $host = "localhost";
+                    $database = "movies";
+                    $username = "root";
+                    $password = "";
+                
+                    //Test Connection
+                    $conn = mysqli_connect($host, $username, $password, $database);
+                    if (mysqli_connect_errno()) {
+                        die("Connection error: " . mysqli_connect_error());
+                    } 
+                
+                    $firstsql = "SELECT firstname FROM user WHERE email = '$email'";
+                    $firstresult = mysqli_query($conn, $firstsql);
+                    $firstrow = mysqli_fetch_array($firstresult);
+                    $firstname = $firstrow['firstname'];
+                    $lastsql = "SELECT lastname FROM user WHERE email = '$email'";
+                    $lastresult = mysqli_query($conn, $lastsql);
+                    $lastrow = mysqli_fetch_array($lastresult);
+                    $lastname = $lastrow['lastname'];
+                    ?>
+                    <input type="text" class="form-control" id="firstName" name="firstname" placeholder="Your first name..." required value='<?php echo $firstname; ?>'>
                 </div>
                 <div class="mb-3">
                     <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastname" placeholder="Your last name..." required>
+                    <input type="text" class="form-control" id="lastName" name="lastname" placeholder="Your last name..." required value='<?php echo $lastname; ?>'>
                 </div>
                 <button type="submit" class="btn btn-primary">Update Name</button>
             </form>

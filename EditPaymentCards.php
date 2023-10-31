@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Address</title>
+    <title>Edit Payment Cards</title>
 
     <!-- Add Bootstrap CSS and JS CDN links -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -201,38 +201,61 @@
             </div>
         </div>
     </nav>
-
-<div class="container mt-5">
+    <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h1>Edit Address</h1>
-            <form action="UpdateAddress.php" method="post">
+            <h1>Add Payment Card</h1>
+            <form action="AddPaymentCard.php" method="post">
                 <div class="mb-3">
-                    <label for="Address" class="form-label">Address</label>
-                    <?php
-                    $email = $_SESSION['email'];
-
-                    $host = "localhost";
-                    $database = "movies";
-                    $username = "root";
-                    $password = "";
-                
-                    //Test Connection
-                    $conn = mysqli_connect($host, $username, $password, $database);
-                    if (mysqli_connect_errno()) {
-                        die("Connection error: " . mysqli_connect_error());
-                    } 
-
-                    $sql = "SELECT address FROM user WHERE email = '$email'";
-                    $result = mysqli_query($conn, $sql);
-                    $row = mysqli_fetch_array($result);
-                    $address = $row['address'];
-                    ?>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Your address..." required value='<?php echo $address; ?>'>
-                    <small class="form-text text-muted">Example: 123 Movie St.</small>
+                    <label for="paymentcard" class="form-label">Card Number</label>
+                    <input type="text" class="form-control" id="cardnumber" name="cardnumber" placeholder="Your card number..." required minlength="19" maxlength="19">
+                    <label for="cardtype" class="form-label">Card Type</label>
+                    <select class="form-select" id="cardtype" name="cardtype">
+                        <option value="debit">Debit</option>
+                        <option value="credit">Credit</option>
+                    </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Update Address</button>
+                <button type="submit" class="btn btn-primary">Add Payment Card</button>
             </form>
+            </div>
+            <div class="col-md-6">
+                <h1 style="margin-bottom: 50px">Current Payment Cards</h1>
+                <?php
+                $host = "localhost";
+                $database = "movies";
+                $username = "root";
+                $password = "";
+                
+                //Test Connection
+                $conn = mysqli_connect($host, $username, $password, $database);
+                if (mysqli_connect_errno()) {
+                    die("Connection error: " . mysqli_connect_error());
+                } 
+                       
+                $email = $_SESSION['email'];
+
+                $usersql = "SELECT userid FROM user WHERE email = '$email'";
+                $result = mysqli_query($conn, $usersql);
+                $usercheck = mysqli_fetch_assoc($result);
+                $user = $usercheck['userid'];
+                
+                $cardsql = "SELECT cardNumber, type, id FROM cards WHERE userId = '$user'";
+                $result = mysqli_query($conn, $cardsql);
+                
+                while ($card = mysqli_fetch_assoc($result)) {
+                    ?>
+                    <div>
+                        <p>Card Number: <?= $card['cardNumber']; ?></p>
+                        <p>Card Type: <?= $card['type']; ?></p>
+                        <form action="DeletePaymentCard.php" method="post">
+                            <input type="hidden" name="cardid" value="<?= $card['id']; ?>">
+                            <button type="submit" class="btn btn-primary">Delete Payment Card</button>
+                        </form>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
         </div>
     </div>
 </div>

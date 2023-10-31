@@ -25,6 +25,12 @@ if (!mysqli_stmt_prepare($stmt, $sql)) {
 
 mysqli_stmt_execute($stmt);
 
-header("Location: EditPromotionStatus.php");
+$subject = 'Promotion status updated';
+$message = 'Your promotion status has been updated: ';
+$message .= $promostatus;
+$header = 'From: ugacinemaebooking@gmail.com';
+mail($email, $subject, $message, $header);
+
+header("Location: EditProfilePanel.php");
 
 ?>

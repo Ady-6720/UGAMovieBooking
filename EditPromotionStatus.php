@@ -140,6 +140,7 @@
         .btn:hover {
             background-color: #005cbf;
         }
+        
 
 
     </style>
@@ -214,7 +215,7 @@
                         <option value="no">No</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Update Promotion</button>
+                <button type="submit" class="btn btn-primary">Update Promotion Status</button>
             </form>
         </div>
     </div>

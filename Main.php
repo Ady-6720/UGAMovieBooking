@@ -181,7 +181,7 @@ i img
             } else {
               ?>
               <div class="nav navbar-nav navbar-right">
-                <a href="AdminControlPanel.html" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+                <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
               </div>
               <div class="nav navbar-nav navbar-right">
                 <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>

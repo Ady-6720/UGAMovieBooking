@@ -46,11 +46,17 @@
         $cardsql = "INSERT INTO cards (userId, cardNumber, type)
         VALUES (?, ?, ?)";
         $type = "debit";
-        $paymentcard = password_hash($userpassword, PASSWORD_DEFAULT);
         $stmt = mysqli_prepare($conn, $cardsql);
         mysqli_stmt_bind_param($stmt, "iss", $id, $paymentcard, $type);
         mysqli_stmt_execute($stmt);
     }
+
+    $subject = 'Activate your account';
+    $message = 'Activate your account using this verification code within the Edit Profile section: ';
+    $message .= $verificationcode;
+    $header = 'From: ugacinemaebooking@gmail.com';
+
+    mail($email, $subject, $message, $header);
 
     header("Location: Main.php");
 

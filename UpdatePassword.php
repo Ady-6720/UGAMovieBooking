@@ -30,9 +30,13 @@ if (mysqli_num_rows($result) == 1) {
             die(mysqli_error($conn));
         }    
         mysqli_stmt_execute($stmt); 
-        echo "Password updated";
+        $subject = 'Password updated';
+        $message = 'Your password has been updated.';
+        $header = 'From: ugacinemaebooking@gmail.com';
+        mail($email, $subject, $message, $header);
+        header("Location: EditProfilePanel.php");
     } else { // if current password does not match database password
-
+        echo "Password is incorrect.";
     }
 
 }

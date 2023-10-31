@@ -1,4 +1,9 @@
 <?php session_start(); ?>
+<?php 
+if ($_SESSION['email'] != "admin@cinemaebooking.com") {
+    echo "Access is denied.";
+} else {
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -158,42 +163,16 @@
                 </li>
             </ul>
         </div>
-        <div class="nav navbar-nav navbar-right">
-                <a href="EditProfilePanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
-            </div>
-            <div class="nav navbar-nav navbar-right">
-                <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
-            </div>
     </div>
 </nav>
 
 <div>
-    <p style="text-align: center; margin-top: 50px; font-size: 24px;">Update User Information</p>
+    <p style="text-align: center; margin-top: 50px; font-size: 24px;">Admin Control Panel</p>
 </div>
 <div class="container" style="justify-content: space-between; gap: 10px;">
-    <button style="background-color: #F4893D; width: 300px;height: 50px;border-radius: 5px;"><a href="EditName.php">Change Name</a></button>
-    <button style="background-color: #F4893D; width: 300px;height: 50px;border-radius: 5px;"><a href="EditPassword.php">Change Password</a></button>
-    <button style="background-color: #F4893D; width: 300px;height: 50px;border-radius: 5px;"><a href="EditPersonalInfoPanel.php">Change Personal Information</a></button>
-    <?php
-    $email = $_SESSION['email']; 
-     
-    $host = "localhost";
-    $database = "movies";
-    $username = "root";
-    $password = "";
-
-    //Test Connection
-    $conn = mysqli_connect($host, $username, $password, $database);
-    if (mysqli_connect_errno()) {
-        die("Connection error: " . mysqli_connect_error());
-    } 
-
-    $sql = "SELECT status FROM user WHERE email = '$email'";
-    $result = mysqli_query($conn, $sql);
-    $statuscheck = mysqli_fetch_assoc($result);
-    $dbstatus = $statuscheck['status'];
-    if ($dbstatus == 'inactive') {
-        ?>
-        <button style="background-color: #F4893D; width: 300px;height: 50px;border-radius: 5px;"><a href="ActivateAccount.php">Activate Account</a></button>
-        <?php
-    }
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="Admin.html">Manage Movies</a></button>
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="ManagePromotions.html">Manage Promotions</a></button>
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;">Manage Users</button>
+</div>
+<?php
+}
