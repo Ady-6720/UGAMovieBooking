@@ -164,14 +164,21 @@ if ($_SESSION['email'] != "admin@cinemaebooking.com") {
             </ul>
         </div>
     </div>
+    <div class="nav navbar-nav navbar-right">
+                <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+              </div>
+              <div class="nav navbar-nav navbar-right">
+                <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
+              </div>
+    </div>
 </nav>
 
 <div>
     <p style="text-align: center; margin-top: 50px; font-size: 24px;">Admin Control Panel</p>
 </div>
 <div class="container" style="justify-content: space-between; gap: 10px;">
-    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="Admin.html">Manage Movies</a></button>
-    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="ManagePromotions.html">Manage Promotions</a></button>
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="MovieControlPanel.php">Manage Movies</a></button>
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="AddPromotion.php">Manage Promotions</a></button>
     <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;">Manage Users</button>
 </div>
 <?php

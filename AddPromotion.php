@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -156,18 +157,24 @@
             </ul>
         </div>
     </div>
+    <div class="nav navbar-nav navbar-right">   
+        <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+     </div>
+    <div class="nav navbar-nav navbar-right">
+        <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
+    </div>
 </nav>
 
     <div class="container">
         <h2>Add Promotion</h2>
-        <form id="addPromotionForm">
+        <form id="addPromotionForm" action="AddPromoCode.php" method="post">
             <div class="form-group">
                 <label for="title">Code: </label>
                 <input type="text" id="code" name="code" required>
             </div>
             <div class="form-group">
-                <label for="percentage">Percentage: </label>
-                <input type="number" id="percentage" name="description" rows="4" required style="width: 100%;"></textarea>
+                <label for="percentage">Discount: </label>
+                <input type="number" id="discount" name="discount" required min="0" step="0.25"></textarea>
             </div>
             <div class="form-group">
                 <label for="year">Start Date:</label>
@@ -178,7 +185,11 @@
                 <input type="date" id="enddate" name="enddate" required>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary"><a href="Main.php">Add Promotion</a></button>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required style="width: 100%;"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Add and Send Promotion</button>
             </div>
         </form>
     </div>

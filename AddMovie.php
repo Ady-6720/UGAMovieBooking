@@ -156,29 +156,68 @@
             </ul>
         </div>
     </div>
+    <div class="nav navbar-nav navbar-right">   
+        <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+     </div>
+    <div class="nav navbar-nav navbar-right">
+        <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
+    </div>
 </nav>
 
     <div class="container">
-        <h2>Add Promotion</h2>
-        <form id="addPromotionForm">
+        <h2>Add Movie</h2>
+        <form id="addMovieForm" action="movie.php" method="post">
             <div class="form-group">
-                <label for="title">Code: </label>
-                <input type="text" id="code" name="code" required>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
             </div>
             <div class="form-group">
-                <label for="percentage">Percentage: </label>
-                <input type="number" id="percentage" name="description" rows="4" required style="width: 100%;"></textarea>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required style="width: 100%;"></textarea>
             </div>
             <div class="form-group">
-                <label for="year">Start Date:</label>
-                <input type="date" id="startdate" name="startdate" required>
+                <label for="cast">Cast:</label>
+                <textarea id="cast" name="cast" rows="4" required style="width: 100%;"></textarea>
             </div>
             <div class="form-group">
-                <label for="genre">End Date:</label>
-                <input type="date" id="enddate" name="enddate" required>
+                <label for="director">Producer:</label>
+                <input type="text" id="producer" name="producer" required>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary"><a href="Main.php">Add Promotion</a></button>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required min="2023-01-01">
+            </div>
+            <div class="form-group">
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" required>
+            </div>
+            <div class="form-group">
+                <label for="rating">MPAA-US Rating:</label>
+                <select class="form-select" id="rating" name="rating">
+                        <option value="G">G</option>
+                        <option value="PG">PG</option>
+                        <option value="PG-13">PG-13</option>
+                        <option value="R">R</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="poster">Poster URL:</label>
+                <input type="text" id="poster" name="poster" required>
+            </div>
+            <div class="form-group">
+                <label for="trailer">Trailer Link:</label>
+                <input type="text" id="trailer" name="trailer" required>
+            </div>
+            <div class="form-group">
+                <label for="kidticket">Kid Ticket Price:</label>
+                <input type="number" id="kidticket" name="kidticket" required min="3.00" step="0.25">
+            </div>
+            <div class="form-group">
+                <label for="kidticket">Adult Ticket Price:</label>
+                <input type="number" id="adultticket" name="adultticket" required min="5.00" step="0.25">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Add Movie</button>
             </div>
         </form>
     </div>

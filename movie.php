@@ -1,11 +1,15 @@
 <?php
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $year = $_POST['year'];
+    $cast = $_POST['cast'];
+    $producer = $_POST['producer'];
+    $date = $_POST['date'];
     $genre = $_POST['genre'];
     $rating = $_POST['rating'];
     $poster = $_POST['poster'];
-    $trailer = $_POST['trailer']; 
+    $trailer = $_POST['trailer'];
+    $kidticket = $_POST['kidticket'];
+    $adultticket = $_POST['adultticket'];
 
     $host = "localhost";
     $database = "movies";
@@ -18,8 +22,8 @@
         die("Connection error: " . mysqli_connect_error());
     } 
 
-    $sql = "INSERT INTO moviecreation (title, description, year, genre, rating, poster, trailer)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO moviecreation (title, description, cast, producer, date, genre, rating, poster, trailer, kidticket, adultticket)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_stmt_init($conn);
 
@@ -27,9 +31,9 @@
         die(mysqli_error($conn));
     }
 
-    mysqli_stmt_bind_param($stmt, "ssissss", $title, $description, $year, $genre, $rating, $poster, $trailer);
+    mysqli_stmt_bind_param($stmt, "sssssssssdd", $title, $description, $cast, $producer, $date, $genre, $rating, $poster, $trailer, $kidticket, $adultticket);
 
     mysqli_stmt_execute($stmt);
 
-    header("Location: Main.html");
+    header("Location: Main.php");
 ?>

@@ -244,6 +244,31 @@ i img
           <h2 style="font-family: 'Lato', sans-serif;">Coming Soon....</h2>
           <div class="coming-soon-card-container" style="overflow-x: auto; white-space: nowrap;">
               <!-- Coming Soon Movie Card 1 -->
+              <?php
+                 $host = "localhost";
+                 $database = "movies";
+                 $username = "root";
+                 $password = "";
+             
+                 //Test Connection
+                 $conn = mysqli_connect($host, $username, $password, $database);
+                 if (mysqli_connect_errno()) {
+                     die("Connection error: " . mysqli_connect_error());
+                 }
+                 
+                 $sql = "SELECT date, poster, title from moviecreation";
+                 $result = mysqli_query($conn, $sql);
+                 while ($row = mysqli_fetch_assoc($result)) {
+                  if (strtotime($row['date']) > strtotime('now')) {
+                  ?>
+                  <div class="movie-card d-inline-block">
+                    <img src="<?php echo $row['poster']; ?>" alt="Movie" class="movie-image">
+                    <p style="font-size: 12px;"><b>Releasing on <?= $row['date']; ?></b></p>
+                 </div>
+                    <?php
+                  }
+                 }
+                 ?>
               <div class="movie-card d-inline-block">
                   <img src="https://i.pinimg.com/564x/11/d7/9a/11d79ad32ffb8d67b745c2464d972c17.jpg" alt="Coming Soon Movie 1" class="movie-image">
                   <p style="font-size: 12px;">Releasing on <b>October 6, 2023</b></p>
@@ -295,6 +320,36 @@ i img
         <div class="col-md-12">
             <div class="movie-card-container" style="overflow-x: auto; white-space: nowrap;">
                 <!-- Movie Card 1 -->
+                <?php
+                 $host = "localhost";
+                 $database = "movies";
+                 $username = "root";
+                 $password = "";
+             
+                 //Test Connection
+                 $conn = mysqli_connect($host, $username, $password, $database);
+                 if (mysqli_connect_errno()) {
+                     die("Connection error: " . mysqli_connect_error());
+                 }
+                 
+                 $sql = "SELECT date, poster, title from moviecreation";
+                 $result = mysqli_query($conn, $sql);
+                 while ($row = mysqli_fetch_assoc($result)) {
+                  if (strtotime($row['date']) < strtotime('now')) {
+                  ?>
+                  <div class="movie-card d-inline-block">
+                    <img src="<?php echo $row['poster']; ?>" alt="Movie" class="movie-image">
+                    <p style="font-size: 12px;"><b>Released on <?= $row['date']; ?></b></p>
+                    <form action="searchmovie.php" method="get">
+                    <a href="SeatBook.html" class="btn btn-primary">Get Tickets</a>                     
+                    <input type="hidden" id="search" name="search" value="<?= $row['title']; ?>">
+                    <input type="submit" class="btn btn-primary" value="Learn More">
+                    </form>
+                 </div>
+                    <?php
+                  }
+                 }
+                 ?>
                 <div class="movie-card d-inline-block">
                     <img src="https://i.pinimg.com/736x/e8/28/ec/e828ec80b3ea34071251978227711996.jpg" alt="Movie 1"
                          class="movie-image">

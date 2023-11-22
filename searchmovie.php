@@ -15,16 +15,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,300;1,900&family=Lilita+One&display=swap" rel="stylesheet">
     <style>
         .container {
-    max-width: 800px; /* Increase the max-width for a wider container */
+    max-width: 1400px; /* Increase the max-width for a wider container */
     margin: 50px auto;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     align-items: center;
+    justify-content: center;
 }
-
-
         h2 {
             text-align: center;
         }
@@ -161,7 +160,7 @@
                     </a>
                 </li>
                 <?php
-                if (session_status() == PHP_SESSION_ACTIVE) {
+                if (isset($_SESSION['email'])) {
                 ?>
                     <p style="margin-left: 50px; margin-top: 7px; color:white"> Welcome <?= $_SESSION['email']?></p>
                 <?php
@@ -174,14 +173,17 @@
                 <i class="fa fa-search" style="color:white"></i></a></button>
             </form>
             <?php
-            if (session_status() == PHP_SESSION_NONE) {
+            if (!isset($_SESSION['email'])) {
             ?>
             <div class="nav navbar-nav navbar-right">
-                <a href="Login.html" class="btn navbar-btn btn-light" style="text-decoration:none;">Login</a>
+                <a href="Login.html" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Login</a>
             </div>
+            <div class="nav navbar-nav navbar-right">
+                <a href="SignUp.html" class="btn navbar-btn btn-light" style="text-decoration:none;">Sign Up</a>
+              </div>
             <?php
             } else {
-                if ($_SESSION['email'] != 'admin@cinemaebooking.com') {
+                if (isset($_SESSION['email']) & $_SESSION['email'] != 'admin@cinemaebooking.com') {
                 ?>
                 <div class="nav navbar-nav navbar-right">
                     <a href="main.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
@@ -190,7 +192,7 @@
                 } else {
                   ?>
                   <div class="nav navbar-nav navbar-right">
-                    <a href="AdminControlPanel.html" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+                    <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
                 </div>
                 <?php
                 }
@@ -220,7 +222,7 @@
         die("Connection error: " . mysqli_connect_error());
     } 
 
-    $sql = "SELECT * FROM `moviecreation` WHERE `title` LIKE '$search'";
+    $sql = "SELECT * FROM moviecreation WHERE title = '$search'";
     $result = mysqli_query($conn, $sql);
     $movie = mysqli_fetch_assoc($result);
     if ($result) {
@@ -230,17 +232,23 @@
                     <iframe width="100%" height="720" src=<?= $movie['trailer']; ?> title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="movie-card-container" style="overflow-x: auto; white-space: nowrap;">
-                                <div class="movie-card d-inline-block" style="margin-left: 280px;">
-                                    <img src="<?php echo $movie['poster']; ?>" alt="Movie" class="movie-image">
-                                    <p style ="font-size: 10px;"><b><?= $movie['description']; ?></p>
-                                    <p style="font-size: 12px;">Rated: <b><?= $movie['rating']; ?></b></p>
-                                    <p style="font-size: 12px;">Released in: <b><?= $movie['year']; ?></b></p>
-                                    <p style="font-size: 12px;">Genre: <b><?= $movie['genre']; ?></b></p>
+                        <div class="col-md-12 text-center">
+                            <img src="<?php echo $movie['poster']; ?>" alt="Movie" class="movie-image">
+                            <div class="movie-card-container">
+                                <p style ="font-size: 25px;"><b><?= $movie['title']; ?></b></p>
+                                <p style ="font-size: 20px;"><b>Release Date: </b><?= $movie['date']; ?></p>
+                                <p style ="font-size: 20px; overflow-wrap: break-word;"><b>Description: </b><?= $movie['description']; ?></p>
+                                <p style ="font-size: 15px;"><b>Producer: </b><?= $movie['producer']; ?></p>
+                                <p style ="font-size: 15px;"><b>Cast: </b><?= $movie['cast']; ?></p>
+                                <p style="font-size: 15px;"><b>Rated: </b><?= $movie['rating']; ?></p>
+                                <p style="font-size: 15px;"><b>Genre: </b><?= $movie['genre']; ?></p>
+                                <?php
+                                if (strtotime($movie['date']) < strtotime('now')) {
+                                    ?>
                                     <a href="SeatBook.html" class="btn btn-primary">Get Tickets</a>
-                                    <a href="#" class="btn btn-secondary">Learn More</a>
-                                </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>

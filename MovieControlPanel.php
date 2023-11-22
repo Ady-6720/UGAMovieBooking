@@ -1,3 +1,9 @@
+<?php session_start(); ?>
+<?php 
+if ($_SESSION['email'] != "admin@cinemaebooking.com") {
+    echo "Access is denied.";
+} else {
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,12 +20,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,300;1,900&family=Lilita+One&display=swap" rel="stylesheet">
     <style>
         .container {
-    max-width: 800px; /* Increase the max-width for a wider container */
+            display: flex;
+            max-width: 800px; /* Increase the max-width for a wider container */
     margin: 50px auto;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    justify-content: center;
 }
 
 
@@ -124,7 +132,7 @@
         }
         a {
             text-decoration: none;
-            color: white;
+            color: black;
         }
     </style>
 </head>
@@ -156,34 +164,21 @@
             </ul>
         </div>
     </div>
+    <div class="nav navbar-nav navbar-right">
+                <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+              </div>
+              <div class="nav navbar-nav navbar-right">
+                <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
+              </div>
+    </div>
 </nav>
 
-    <div class="container">
-        <h2>Add Promotion</h2>
-        <form id="addPromotionForm">
-            <div class="form-group">
-                <label for="title">Code: </label>
-                <input type="text" id="code" name="code" required>
-            </div>
-            <div class="form-group">
-                <label for="percentage">Percentage: </label>
-                <input type="number" id="percentage" name="description" rows="4" required style="width: 100%;"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="year">Start Date:</label>
-                <input type="date" id="startdate" name="startdate" required>
-            </div>
-            <div class="form-group">
-                <label for="genre">End Date:</label>
-                <input type="date" id="enddate" name="enddate" required>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary"><a href="Main.php">Add Promotion</a></button>
-            </div>
-        </form>
-    </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<div>
+    <p style="text-align: center; margin-top: 50px; font-size: 24px;">Admin Control Panel</p>
+</div>
+<div class="container" style="justify-content: space-between; gap: 10px;">
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="AddMovie.php">Add Movie</a></button>
+    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="ScheduleMovie.php">Schedule Movie</a></button>
+</div>
+<?php
+}

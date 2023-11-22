@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -156,29 +157,62 @@
             </ul>
         </div>
     </div>
+    <div class="nav navbar-nav navbar-right">   
+        <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+     </div>
+    <div class="nav navbar-nav navbar-right">
+        <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
+    </div>
 </nav>
 
     <div class="container">
-        <h2>Add Promotion</h2>
-        <form id="addPromotionForm">
+        <h2>Schedule Movie</h2>
+        <form id="scheduleMovieForm" action="AddShowing.php" method="post">
             <div class="form-group">
-                <label for="title">Code: </label>
-                <input type="text" id="code" name="code" required>
+                    <label for="movie">Movie:</label>
+                    <select class="form-select" id="movie" name="movie">
+                        <?php
+                        $host = "localhost";
+                        $database = "movies";
+                        $username = "root";
+                        $password = "";
+                 
+                        //Test Connection
+                        $conn = mysqli_connect($host, $username, $password, $database);
+                        if (mysqli_connect_errno()) {
+                            die("Connection error: " . mysqli_connect_error());
+                        }
+
+                        $promosql = "SELECT title, id FROM moviecreation";
+                        $result = mysqli_query($conn, $promosql);
+
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <option value="<?= $row['id']; ?>"><?= $row['title']; ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
             </div>
             <div class="form-group">
-                <label for="percentage">Percentage: </label>
-                <input type="number" id="percentage" name="description" rows="4" required style="width: 100%;"></textarea>
+                <label for="showdate">Date:</label>
+                    <input type="date" id="date" name="date" required>
             </div>
             <div class="form-group">
-                <label for="year">Start Date:</label>
-                <input type="date" id="startdate" name="startdate" required>
+                <label for="showtime">Time:</label>
+                    <input type="text" id="time" name="time" required>
             </div>
             <div class="form-group">
-                <label for="genre">End Date:</label>
-                <input type="date" id="enddate" name="enddate" required>
+                    <label for="showroom">Showroom:</label>
+                    <select class="form-select" id="showroom" name="showroom">
+                        <option value="1">Showroom One</option>
+                        <option value="2">Showroom Two</option>
+                        <option value="3">Showroom Three</option>
+                        <option value="4">Showroom Four</option>
+                    </select>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary"><a href="Main.php">Add Promotion</a></button>
+                <button type="submit" class="btn btn-primary">Schedule Movie</button>
             </div>
         </form>
     </div>
