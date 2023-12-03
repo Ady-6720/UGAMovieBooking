@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Address</title>
-
-    <!-- Add Bootstrap CSS and JS CDN links -->
+    <title>Cart</title>
+    <!-- Include Bootstrap CSS -->
     <link rel="icon" href="https://i.ibb.co/jy62Srz/36a17f9402f64b66ba11ad785ec9ff3e.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,8 +15,45 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,300;1,900&family=Lilita+One&display=swap" rel="stylesheet">
-   <style>
+    <style>
         
+        .navbar {
+            background-color: #F4893D;
+        }
+        .navbar-brand {
+            font-family: 'fantasy';
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .signup-container {
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+
+        i img {
+            width: 25px; /* Adjust the width and height as needed */
+            height: 25px;
+        }
+
+        /* Custom style for the signup button */
+        .custom-signup-button {
+            background-color: #F4893D; /* Set button color to #F4893D */
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 350px;
+        }
+
+        .custom-signup-button:hover {
+            background-color: #FFA653; /* Change button color on hover */
+        }
+
         .navbar {
             position: sticky;
             top: 0;
@@ -28,7 +64,10 @@
         .navbar-brand {
             font-family: 'fantasy';
         }
-        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
 
         .login-container {
             max-width: 400px;
@@ -146,7 +185,6 @@
             background-color: #005cbf;
         }
 
-
     </style>
 </head>
 <body>
@@ -155,9 +193,8 @@
         <a class="navbar-brand active" style="color:white; font-family: 'Lato', sans-serif; font-family: 'Lilita One', cursive;" href="Main.php">
             <i><img src="https://i.ibb.co/jy62Srz/36a17f9402f64b66ba11ad785ec9ff3e.png"></i> UGAMovieFinder
         </a>
-		      <a href="Cart.php" style="text-decoration:none; margin-right: 2400px; margin-top: 5px">
+		      <a class="nav navbar-nav navbar-left" href="Cart.php" style="text-decoration:none; margin-right: 2400px; margin-top: 5px">
           <i class="fa fa-shopping-cart" style="color:white"></i></a>
-        </div>
         
         </div>
         <div class="nav navbar-nav navbar-right">
@@ -169,37 +206,72 @@
         </div>
     </nav>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h1>Edit Address</h1>
-            <form action="UpdateAddress.php" method="post">
-                <div class="mb-3">
-                    <label for="Address" class="form-label">Address</label>
-                    <?php
-                    $email = $_SESSION['email'];
+    <?php
+        date_default_timezone_set('America/New_York');
+        $currentDate = date('m-d-y h:i');
+        
+        $cart = $_SESSION['cart'];
+        $total = $_SESSION['total'];
+        $email = $_SESSION['email'];
+        $tax = $total * 0.07;
 
-                    $host = "localhost";
-                    $database = "movies";
-                    $username = "root";
-                    $password = "";
-                
-                    //Test Connection
-                    $conn = mysqli_connect($host, $username, $password, $database);
-                    if (mysqli_connect_errno()) {
-                        die("Connection error: " . mysqli_connect_error());
-                    } 
+        if (isset($_SESSION['promotion'])) {
+            $total = $total + $tax - $_SESSION['promotion'];
+        } else {
+            $total = $total + $tax;
+        }
 
-                    $sql = "SELECT address FROM user WHERE email = '$email'";
-                    $result = mysqli_query($conn, $sql);
-                    $row = mysqli_fetch_array($result);
-                    $address = $row['address'];
-                    ?>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Your address..." required value='<?php echo $address; ?>'>
-                    <small class="form-text text-muted">Example: 123 Movie St.</small>
-                </div>
-                <button type="submit" class="btn btn-primary">Update Address</button>
-            </form>
+        $host = "localhost";
+        $database = "movies";
+        $username = "root";
+        $password = "";
+                        
+        //Test Connection
+        $conn = mysqli_connect($host, $username, $password, $database);
+        if (mysqli_connect_errno()) {
+            die("Connection error: " . mysqli_connect_error());
+        } 
+
+        $idsql = "SELECT `userid` FROM `user` WHERE `email` LIKE '$email'";
+        $idresult = mysqli_query($conn, $idsql);
+        $idcheck = mysqli_fetch_assoc($idresult);
+        $id = $idcheck['userid'];
+
+        
+        $cart .= "Total = $$total
+";
+
+        if (isset($_SESSION['promotion'])) {
+            $cart .= "Using a promotion, you saved $";
+            $cart .=  $_SESSION['promotion'];
+            $cart .= "
+";
+        }
+
+        $cart.= "Order placed on $currentDate.
+        ";
+
+
+
+        $bookingsql = "INSERT INTO userbookings (userId, booking)
+        VALUES (?, ?)";
+        $stmt = mysqli_prepare($conn, $bookingsql);
+        mysqli_stmt_bind_param($stmt, "is", $id, $cart);
+        mysqli_stmt_execute($stmt);
+
+        $subject = 'Order confirmation';
+        $header = 'From: ugacinemaebooking@gmail.com';
+
+        mail($email, $subject, $cart, $header);
+
+        unset($_SESSION['cart']);
+        unset($_SESSION['total']);
+        unset($_SESSION['tax']);
+        unset($_SESSION['promotion']);
+        ?>
+        <div>
+            <p style="text-align: center; font-size: 24px; margin-top: 50px;">Your order has been successfully processed!</p>
+            <p style="text-align: center; font-size: 16px; margin-top: 25px;">Check your email for a copy of your order.</p>
         </div>
-    </div>
-</div>
+</body>
+</html>

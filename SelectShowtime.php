@@ -1,4 +1,8 @@
 <?php session_start(); ?>
+<?php
+$title = $_SESSION['title'];
+//$_SESSION['title'] = $_POST['title'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -130,78 +134,84 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
         <a class="navbar-brand active" style="color:white; font-family: 'Lato', sans-serif; font-family: 'Lilita One', cursive;" href="Main.php">
             <i><img src="https://i.ibb.co/jy62Srz/36a17f9402f64b66ba11ad785ec9ff3e.png"></i> UGAMovieFinder
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-            </ul>
+		      <a class="nav navbar-nav navbar-left" href="Cart.php" style="text-decoration:none; margin-right: 2390px; margin-top: 5px">
+          <i class="fa fa-shopping-cart" style="color:white"></i></a>
+        
         </div>
-    </div>
-    <div class="nav navbar-nav navbar-right">
-                <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px; width: 100px;">Control Panel</a>
-              </div>
-              <div class="nav navbar-nav navbar-right" style="margin-right: 25px;">
+        <div class="nav navbar-nav navbar-right">
+                <a href="EditProfilePanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px; width: 85px">Edit Profile</a>
+            </div>
+            <div class="nav navbar-nav navbar-right" style="margin-right: 20px">
                 <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
-              </div>
-    </div>
-</nav>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-        <h2>Schedule Movie</h2>
-        <form id="scheduleMovieForm" action="AddShowing.php" method="post">
-            <div class="form-group">
-                    <label for="movie">Movie:</label>
-                    <select class="form-select" id="movie" name="movie">
-                        <?php
+        <h2>Select Showtime for <?= $title; ?></h2>
+        <form action="SelectSeats.php" method="post">
+        <div class="form-group">
+                <label for="rating">Showtime:</label>
+                <select class="form-select" id="showtime" name="showtime">
+                    <?php
                         $host = "localhost";
                         $database = "movies";
                         $username = "root";
                         $password = "";
-                 
+                    
                         //Test Connection
                         $conn = mysqli_connect($host, $username, $password, $database);
                         if (mysqli_connect_errno()) {
                             die("Connection error: " . mysqli_connect_error());
                         }
 
-                        $promosql = "SELECT title, id, date FROM moviecreation";
-                        $result = mysqli_query($conn, $promosql);
+                        $sql = "SELECT id from moviecreation WHERE title = '$title'";
+                        $result = mysqli_query($conn, $sql);
+                        $row = mysqli_fetch_array($result);
+                        $movieid = $row['id'];
 
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            if (strtotime($row['date']) < strtotime('now')) {
+                        $showingsql = "SELECT date, time, showroomId from movieshow WHERE movieId = '$movieid'";
+                        $showresult = mysqli_query($conn, $showingsql);
+                        while ($row = mysqli_fetch_assoc($showresult)) {
+                            if (!isset($showroom)) {
+                                $showroom = $row['showroomId'];
+                            }    
                             ?>
-                            <option value="<?= $row['id']; ?>"><?= $row['title']; ?></option>
+                            <option value="<?= $row['date']; ?> <?= $row['time']; ?>"><?= $row['date']; ?> <?= $row['time']; ?></option>
                             <?php
-                        }}
+                        }
                         ?>
-                    </select>
+                        <input type="hidden" id="showroom" name="showroom" value="<?= $showroom ?>">
+                </select>
             </div>
             <div class="form-group">
-                <label for="showdate">Date:</label>
-                    <input type="date" id="date" name="date" required>
+                <label for="rating">Select Number of Child Tickets:</label>
+                <select class="form-select" id="childtickets" name="childtickets">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="showtime">Time:</label>
-                    <input type="text" id="time" name="time" required>
+                <label for="rating">Select Number of Adult Tickets:</label>
+                <select class="form-select" id="adulttickets" name="adulttickets">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                </select>
             </div>
-            <div class="form-group">
-                    <label for="showroom">Showroom:</label>
-                    <select class="form-select" id="showroom" name="showroom">
-                        <option value="1">Showroom One</option>
-                        <option value="2">Showroom Two</option>
-                        <option value="3">Showroom Three</option>
-                        <option value="4">Showroom Four</option>
-                    </select>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Schedule Movie</button>
-            </div>
+            <button type="submit" class="btn btn-primary">Select Seats</button>
         </form>
     </div>
 

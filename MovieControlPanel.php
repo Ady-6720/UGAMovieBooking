@@ -147,32 +147,17 @@ if ($_SESSION['email'] != "admin@cinemaebooking.com") {
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" style="color:white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Movies
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> New Movies</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> Upcoming Releases</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> International Movies</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> Kids Movies</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal" style="color:white" href="#"></a>
-                </li>
             </ul>
         </div>
     </div>
     <div class="nav navbar-nav navbar-right">
-                <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+                <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px; width: 100px;">Control Panel</a>
               </div>
-              <div class="nav navbar-nav navbar-right">
+              <div class="nav navbar-nav navbar-right" style="margin-right: 25px;">
                 <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
               </div>
     </div>
 </nav>
-
 <div>
     <p style="text-align: center; margin-top: 50px; font-size: 24px;">Admin Control Panel</p>
 </div>

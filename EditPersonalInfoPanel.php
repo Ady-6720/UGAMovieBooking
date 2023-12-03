@@ -132,41 +132,23 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
         <a class="navbar-brand active" style="color:white; font-family: 'Lato', sans-serif; font-family: 'Lilita One', cursive;" href="Main.php">
             <i><img src="https://i.ibb.co/jy62Srz/36a17f9402f64b66ba11ad785ec9ff3e.png"></i> UGAMovieFinder
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" style="color:white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Movies
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> New Movies</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> Upcoming Releases</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> International Movies</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> Kids Movies</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal" style="color:white" href="#"></a>
-                </li>
-            </ul>
+		      <a class="nav navbar-nav navbar-left" href="Cart.php" style="text-decoration:none; margin-right: 2400px; margin-top: 5px">
+          <i class="fa fa-shopping-cart" style="color:white"></i></a>
+        
         </div>
         <div class="nav navbar-nav navbar-right">
-                <a href="EditProfilePanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
+                <a href="EditProfilePanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px; width: 85px">Edit Profile</a>
             </div>
-            <div class="nav navbar-nav navbar-right">
+            <div class="nav navbar-nav navbar-right" style="margin-right: 20px">
                 <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
             </div>
-    </div>
-</nav>
-
+        </div>
+    </nav>
 <div>
     <p style="text-align: center; margin-top: 50px; font-size: 24px;">Update User Information</p>
 </div>

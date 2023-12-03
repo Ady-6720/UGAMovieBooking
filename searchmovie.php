@@ -131,80 +131,88 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-        <a class="navbar-brand active" style="color:white; font-family: 'Lato', sans-serif; font-family: 'Lilita One', cursive;" href="Main.php">
-            <i><img src="https://i.ibb.co/jy62Srz/36a17f9402f64b66ba11ad785ec9ff3e.png"></i> UGAMovieFinder
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" style="color:white" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Movies
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> New Movies</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> Upcoming Releases</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> International Movies</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-camera-reels-fill"></i> Kids Movies</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal" style="color:white" href="#"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" style="text-decoration:none">
-                        <i class="fa fa-shopping-cart" style="color:white"></i>
-                    </a>
-                </li>
-                <?php
-                if (isset($_SESSION['email'])) {
-                ?>
-                    <p style="margin-left: 50px; margin-top: 7px; color:white"> Welcome <?= $_SESSION['email']?></p>
-                <?php
-                }
-                ?>
-            </ul>
-            <form class="d-flex center" action="searchmovie.php" method="get">
-                <input class="form-control me-2" type="search" placeholder="Search by Title" aria-label="Search" name="search">
-                <button class="btn btn-outline-primary" type="submit"> <a class="nav-link" href="#" style="text-decoration:none">
-                <i class="fa fa-search" style="color:white"></i></a></button>
-            </form>
+  <div class="container-fluid">
+    
+	<a class="navbar-brand active" style="color:white; font-family: 'Lato', sans-serif; font-family: 'Lilita One', cursive;" href="Main.php"> <i><img src="https://i.ibb.co/jy62Srz/36a17f9402f64b66ba11ad785ec9ff3e.png"></i> UGAMovieFinder</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;"> 
+        
+      <?php
+      if (isset( $_SESSION['email'])) {
+        if ($_SESSION['email'] != 'admin@cinemaebooking.com') {
+          ?>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal" style="color:white" href="#"></a>
+          </li>	
+		      <a class="nav-link" href="Cart.html" style="text-decoration:none; margin-right: 50px; margin-top: 5px">
+          <i class="fa fa-shopping-cart" style="color:white"></i></a>
+          </li>
+      <li>
+        <?php
+        }
+      }
+      ?>
+          <?php
+           if (isset( $_SESSION['email'])) {
+            ?>
+              <p style="margin-left: 5px; margin-top: 13px; color:white"> Welcome <?= $_SESSION['email']?></p>
             <?php
-            if (!isset($_SESSION['email'])) {
+           }
+           ?>
+        </li>
+      </ul>
+      <form class="d-flex center" action="searchmovie.php" method="get">
+        <input class="form-control me-2" type="search" placeholder="Search by Title or Release Status (Coming Soon/Current Movies)" aria-label="Search" name="search">
+        <button class="btn btn-outline-primary" type="submit"> <a class="nav-link" href="#" style="text-decoration:none">
+          <i class="fa fa-search" style="color:white"></i></a></button>
+      </form>
+      <?php
+        if (session_status() == PHP_SESSION_NONE) {
+        ?>
+            <div class="nav navbar-nav navbar-right">
+                <a href="Login.html" class="btn navbar-btn btn-light" style="text-decoration:none;">Login</a>
+            </div>
+        <?php
+        } else {
+            if (isset( $_SESSION['email'])) {
+              if ($_SESSION['email'] != 'admin@cinemaebooking.com') {
             ?>
             <div class="nav navbar-nav navbar-right">
-                <a href="Login.html" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Login</a>
+                <a href="EditProfilePanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
             </div>
             <div class="nav navbar-nav navbar-right">
-                <a href="SignUp.html" class="btn navbar-btn btn-light" style="text-decoration:none;">Sign Up</a>
+                <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
+            </div>
+              <?php
+            } else {
+              ?>
+              <div class="nav navbar-nav navbar-right">
+                <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
+              </div>
+              <div class="nav navbar-nav navbar-right">
+                <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
               </div>
             <?php
+            }
             } else {
-                if (isset($_SESSION['email']) & $_SESSION['email'] != 'admin@cinemaebooking.com') {
-                ?>
-                <div class="nav navbar-nav navbar-right">
-                    <a href="main.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
-                </div>
-                  <?php
-                } else {
-                  ?>
-                  <div class="nav navbar-nav navbar-right">
-                    <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px">Control Panel</a>
-                </div>
-                <?php
-                }
-                ?>
-                <div class="nav navbar-nav navbar-right">
-                    <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
-                </div>
-            <?php    
+              ?>
+              <div class="nav navbar-nav navbar-right">
+                <a href="Login.html" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Login</a>
+              </div>
+              <div class="nav navbar-nav navbar-right">
+                <a href="SignUp.html" class="btn navbar-btn btn-light" style="text-decoration:none;">Sign Up</a>
+              </div>
+              <?php
             }
             ?>
-        </div>
+        <?php    
+        }
+        ?>
     </div>
+  </div>
 </nav>
 
 <tbody>
@@ -222,45 +230,88 @@
         die("Connection error: " . mysqli_connect_error());
     } 
 
-    $sql = "SELECT * FROM moviecreation WHERE title = '$search'";
-    $result = mysqli_query($conn, $sql);
-    $movie = mysqli_fetch_assoc($result);
-    if ($result) {
-            if(mysqli_num_rows($result) > 0) {
-                ?>
-                <tr>
-                    <iframe width="100%" height="720" src=<?= $movie['trailer']; ?> title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        <div class="container">
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <img src="<?php echo $movie['poster']; ?>" alt="Movie" class="movie-image">
-                            <div class="movie-card-container">
-                                <p style ="font-size: 25px;"><b><?= $movie['title']; ?></b></p>
-                                <p style ="font-size: 20px;"><b>Release Date: </b><?= $movie['date']; ?></p>
-                                <p style ="font-size: 20px; overflow-wrap: break-word;"><b>Description: </b><?= $movie['description']; ?></p>
-                                <p style ="font-size: 15px;"><b>Producer: </b><?= $movie['producer']; ?></p>
-                                <p style ="font-size: 15px;"><b>Cast: </b><?= $movie['cast']; ?></p>
-                                <p style="font-size: 15px;"><b>Rated: </b><?= $movie['rating']; ?></p>
-                                <p style="font-size: 15px;"><b>Genre: </b><?= $movie['genre']; ?></p>
-                                <?php
-                                if (strtotime($movie['date']) < strtotime('now')) {
-                                    ?>
-                                    <a href="SeatBook.html" class="btn btn-primary">Get Tickets</a>
+    if (strtolower("$search") != "coming soon" && strtolower("$search") != "current movies") {
+        $sql = "SELECT * FROM moviecreation WHERE title = '$search'";
+        $result = mysqli_query($conn, $sql);
+        $movie = mysqli_fetch_assoc($result);
+        if ($result) {
+                if(mysqli_num_rows($result) > 0) {
+                    ?>
+                    <tr>
+                        <iframe width="100%" height="720" src=<?= $movie['trailer']; ?> title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <img src="<?php echo $movie['poster']; ?>" alt="Movie" class="movie-image">
+                                <div class="movie-card-container">
+                                    <p style ="font-size: 25px;"><b><?= $movie['title']; ?></b></p>
+                                    <p style ="font-size: 20px;"><b>Release Date: </b><?= $movie['date']; ?></p>
+                                    <p style ="font-size: 20px; overflow-wrap: break-word;"><b>Description: </b><?= $movie['description']; ?></p>
+                                    <p style ="font-size: 15px;"><b>Producer: </b><?= $movie['producer']; ?></p>
+                                    <p style ="font-size: 15px;"><b>Cast: </b><?= $movie['cast']; ?></p>
+                                    <p style="font-size: 15px;"><b>Rated: </b><?= $movie['rating']; ?></p>
+                                    <p style="font-size: 15px;"><b>Genre: </b><?= $movie['genre']; ?></p>
                                     <?php
-                                }
-                                ?>
+                                    if (strtotime($movie['date']) < strtotime('now')) {
+                                        ?>
+                                        <a href="SeatBook.html" class="btn btn-primary">Get Tickets</a>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </tr>
-                <?php
-            } else {
-                ?>
+                    </tr>
+                    <?php
+                } else {
+                    ?>
                     <div>
                         <p style="text-align: center; font-size: 24px; margin-top: 50px;">The movie searched could not be found.</p>
                     </div>    
                 <?php
+                }
+        }   
+    } else if (strtolower($search) == "coming soon") {
+        $sql = "SELECT date, poster, title from moviecreation";
+        $result = mysqli_query($conn, $sql);
+        ?>
+        <h1 style="text-align: center; margin-top: 50px">Coming Soon</h1>
+        <?php
+        while ($row = mysqli_fetch_assoc($result)) {
+            if (strtotime($row['date']) > strtotime('now')) {
+                ?>
+                <div class="movie-card d-inline-block" style="margin-left: 50px">
+                    <img src="<?php echo $row['poster']; ?>" alt="Movie" class="movie-image">
+                    <p style="font-size: 12px;"><b>Releasing on <?= $row['date']; ?></b></p>
+                    <form action="searchmovie.php" method="get">               
+                    <input type="hidden" id="search" name="search" value="<?= $row['title']; ?>">
+                    <input type="submit" class="btn btn-primary" value="Learn More">
+                    </form>
+                 </div>
+                 <?php
             }
+        }
+    } else if (strtolower($search) == "current movies") {
+        $sql = "SELECT date, poster, title from moviecreation";
+        $result = mysqli_query($conn, $sql);
+        ?>
+        <h1 style="text-align: center; margin-top: 50px">Current Movies</h1>
+        <?php
+        while ($row = mysqli_fetch_assoc($result)) {
+            if (strtotime($row['date']) < strtotime('now')) {
+                ?>
+                <div class="movie-card d-inline-block" style="margin-left: 50px">
+                    <img src="<?php echo $row['poster']; ?>" alt="Movie" class="movie-image">
+                    <p style="font-size: 12px;"><b>Released on <?= $row['date']; ?></b></p>
+                    <form action="searchmovie.php" method="get">
+                    <a href="SeatBook.html" class="btn btn-primary">Get Tickets</a>                     
+                    <input type="hidden" id="search" name="search" value="<?= $row['title']; ?>">
+                    <input type="submit" class="btn btn-primary" value="Learn More">
+                    </form>
+                </div>
+                 <?php
+            }
+        }
     }
     ?>
 </tbody>        

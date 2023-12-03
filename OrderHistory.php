@@ -1,9 +1,4 @@
 <?php session_start(); ?>
-<?php 
-if ($_SESSION['email'] != "admin@cinemaebooking.com") {
-    echo "Access is denied.";
-} else {
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,14 +15,12 @@ if ($_SESSION['email'] != "admin@cinemaebooking.com") {
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,300;1,900&family=Lilita+One&display=swap" rel="stylesheet">
     <style>
         .container {
-            display: flex;
-            max-width: 800px; /* Increase the max-width for a wider container */
+    max-width: 1200px; /* Increase the max-width for a wider container */
     margin: 50px auto;
     padding: 20px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    justify-content: center;
 }
 
 
@@ -132,7 +125,7 @@ if ($_SESSION['email'] != "admin@cinemaebooking.com") {
         }
         a {
             text-decoration: none;
-            color: black;
+            color: white;
         }
     </style>
 </head>
@@ -142,30 +135,66 @@ if ($_SESSION['email'] != "admin@cinemaebooking.com") {
         <a class="navbar-brand active" style="color:white; font-family: 'Lato', sans-serif; font-family: 'Lilita One', cursive;" href="Main.php">
             <i><img src="https://i.ibb.co/jy62Srz/36a17f9402f64b66ba11ad785ec9ff3e.png"></i> UGAMovieFinder
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+		      <a class="nav-link" href="Cart.php" style="text-decoration:none; margin-right: 50px; margin-top: 5px">
+          <i class="fa fa-shopping-cart" style="color:white"></i></a>
+        
         <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-            </ul>
         </div>
-    </div>
-    <div class="nav navbar-nav navbar-right">
-                <a href="AdminControlPanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 25px; width: 100px;">Control Panel</a>
-              </div>
-              <div class="nav navbar-nav navbar-right" style="margin-right: 25px;">
+        <div class="nav navbar-nav navbar-right">
+                <a href="EditProfilePanel.php" class="btn navbar-btn btn-light" style="text-decoration:none; margin-right: 20px">Edit Profile</a>
+            </div>
+            <div class="nav navbar-nav navbar-right">
                 <a href="logout.php" class="btn navbar-btn btn-light" style="text-decoration:none;">Logout</a>
-              </div>
+            </div>
     </div>
 </nav>
+    <?php
+    $email = $_SESSION['email'];
+    
+    $host = "localhost";
+    $database = "movies";
+    $username = "root";
+    $password = "";
+                    
+    //Test Connection
+    $conn = mysqli_connect($host, $username, $password, $database);
+    if (mysqli_connect_errno()) {
+        die("Connection error: " . mysqli_connect_error());
+    } 
 
-<div>
-    <p style="text-align: center; margin-top: 50px; font-size: 24px;">Admin Control Panel</p>
+    $idsql = "SELECT `userid` FROM `user` WHERE `email` LIKE '$email'";
+    $idresult = mysqli_query($conn, $idsql);
+    $idcheck = mysqli_fetch_assoc($idresult);
+    $id = $idcheck['userid'];
+
+    $bookingsql = "SELECT booking from userbookings WHERE userId = '$id'";
+    $result = mysqli_query($conn, $bookingsql);
+    
+    if ($result && mysqli_num_rows($result) > 0) {
+    ?>
+
+<div class="container signup-container" style="text-align: center;">
+<h1>Order History</h1>
+<div class="card">
+<div class="card-body">
+        <?php
+        while ($order = mysqli_fetch_assoc($result)) {
+            ?>
+            <p><?= $order['booking']; ?></p>
+            <?php
+        }
+        ?>
 </div>
-<div class="container" style="justify-content: space-between; gap: 10px;">
-    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="MovieControlPanel.php">Manage Movies</a></button>
-    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;"><a href="AddPromotion.php">Manage Promotions</a></button>
-    <button style="background-color: #F4893D; width: 300px;height: 40px;border-radius: 5px;">Manage Users</button>
+</div>
 </div>
 <?php
-}
+    } else {
+    ?>
+        <div>
+            <p style="text-align: center; font-size: 24px; margin-top: 50px;">You have not made any purchases.</p>
+        </div>  
+    <?php
+    }
+    ?>
+    </body>
+</html>
