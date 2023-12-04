@@ -1,6 +1,7 @@
 <?php session_start(); ?>
 <?php
 $title = $_POST['title'];
+$_SESSION['title'] = $title;
 ?>
 <!DOCTYPE html>
 <html>

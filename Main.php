@@ -296,8 +296,9 @@ i img
                     <img src="<?php echo $row['poster']; ?>" alt="Movie" class="movie-image">
                     <p style="font-size: 12px;"><b>Released on <?= $row['date']; ?></b></p>
                     <form action="SelectShowtime.php" method="post">
-                      <input type="hidden" id="title" name="title" value="<?= $row['title']; ?>">
-                      <input type="submit" class="btn btn-primary" value="Get Tickets">
+                        <input type="hidden" id="title" name="title" value="<?= $row['title']; ?>">
+                        <?php ?>
+                        <input type="submit" class="btn btn-primary" value="Get Tickets">
                     </form>
                     <form action="searchmovie.php" method="get">                    
                       <input type="hidden" id="search" name="search" value="<?= $row['title']; ?>">

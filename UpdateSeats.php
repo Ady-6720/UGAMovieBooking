@@ -87,6 +87,8 @@ if ($ticketcount !== $childtickets + $adulttickets) {
         $_SESSION['total'] += $total;
     }
 
+    unset($_SESSION['title']);
+
     header("Location: Main.php");   
 }
 

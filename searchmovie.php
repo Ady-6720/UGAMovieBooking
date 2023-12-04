@@ -256,7 +256,6 @@
                                         ?>
                                         <form action="SelectShowtime.php" method="post">
                                             <input type="hidden" id="title" name="title" value="<?= $movie['title']; ?>">
-                                            <?php $_SESSION['title'] = $movie['title']; ?>
                                             <input type="submit" class="btn btn-primary" value="Get Tickets">
                                         </form>
                                         <?php
