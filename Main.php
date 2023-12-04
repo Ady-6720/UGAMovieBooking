@@ -297,7 +297,6 @@ i img
                     <p style="font-size: 12px;"><b>Released on <?= $row['date']; ?></b></p>
                     <form action="SelectShowtime.php" method="post">
                       <input type="hidden" id="title" name="title" value="<?= $row['title']; ?>">
-                      <?php $_SESSION['title'] = $row['title']; ?>
                       <input type="submit" class="btn btn-primary" value="Get Tickets">
                     </form>
                     <form action="searchmovie.php" method="get">                    

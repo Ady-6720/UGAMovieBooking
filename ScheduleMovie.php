@@ -1,4 +1,9 @@
 <?php session_start(); ?>
+<?php 
+if (!isset($_SESSION['email']) || $_SESSION['email'] != "admin@cinemaebooking.com") {
+    echo "Access is denied.";
+} else {
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -209,3 +214,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<?php
+}
